@@ -59,16 +59,16 @@ struct cell *find_nearest(struct request *req, struct cell *current,
 	struct cell **bucket = malloc(sizeof(struct cell*) * bucket_size);
 	struct cell *nearest = NULL;
 
-	//if (current->id + 1 <= req->real_len - 1 &&
-	//	current->y == req->cells[current->id + 1]->y)
+	if (current->id + 1 <= req->real_len - 1 &&
+		current->y == req->cells[current->id + 1]->y)
 		bucket[0] = get_cell_by_id(req, current->id + 1);
-	//else
-	//	bucket[0] = NULL;
-	//if (current->id - 1 >= 0 &&
-	//	current->y == req->cells[current->id - 1]->y)
+	else
+		bucket[0] = NULL;
+	if (current->id - 1 >= 0 &&
+		current->y == req->cells[current->id - 1]->y)
 		bucket[1] = get_cell_by_id(req, current->id - 1);
-	//else
-	//	bucket[1] = NULL;
+	else
+		bucket[1] = NULL;
 	bucket[2] = get_cell_by_id(req, current->id + req->map_width + 1);
 	bucket[3] = get_cell_by_id(req, current->id - (req->map_width + 1));
 	nearest = clean_bucket(req, bucket, end);

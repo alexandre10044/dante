@@ -2,10 +2,14 @@
 ** EPITECH PROJECT, 2018
 ** reader.c
 ** File description:
-**
+**  
 */
 
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "solver.h"
+#include "string.h"
 
 char *read_file(const char *file_name)
 {
@@ -32,7 +36,7 @@ char *read_file(const char *file_name)
 	return (buff);
 }
 
-char *get_line(char *str, int start)
+char *get_line(const char *str, const int start)
 {
 	char *result;
 	int i;

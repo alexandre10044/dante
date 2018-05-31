@@ -2,10 +2,14 @@
 ** EPITECH PROJECT, 2018
 ** instances.c
 ** File description:
-**
+**  
 */
 
+#include <stdlib.h>
+#include <stdbool.h>
+
 #include "solver.h"
+#include "engine.h"
 
 struct request *get_instance(const char *file_name)
 {

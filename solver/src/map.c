@@ -2,14 +2,18 @@
 ** EPITECH PROJECT, 2018
 ** map.c
 ** File description:
-**
+**  
 */
 
-#include "solver.h"
+#include <stdlib.h>
+#include <stdbool.h>
+
+#include "engine.h"
+#include "string.h"
 
 static const char cells_value[3] = { '*', 'X', 'o' };
 
-int get_map_width(char *str)
+int get_map_width(const char *str)
 {
 	for (int i = 0; str[i]; i++)
 		if (str[i] == '\n')
@@ -17,7 +21,7 @@ int get_map_width(char *str)
 	return (0);
 }
 
-int get_map_height(char *str)
+int get_map_height(const char *str)
 {
 	return (string_len(str, '\n') + 2);
 }
@@ -34,14 +38,14 @@ void clear_map(struct request *req)
 			req->cells[i]->state = EMPTY;
 }
 
-struct cell *get_cell_by_id(struct request *req, int id)
+struct cell *get_cell_by_id(const struct request *req, const int id)
 {
 	if (id >= 0 && id < req->real_len)
 		return (req->cells[id]);
 	return (NULL);
 }
 
-int get_state(char c)
+int get_state(const char c)
 {
 	const int state_len = 3;
 

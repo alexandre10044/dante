@@ -5,37 +5,62 @@
 ##
 ##
 
-SRC	=	./src/engine.c \
+LIB	=	../common/src/string.c \
+		../common/src/output.c \
+
+SRC	=	$(LIB) \
+		./src/engine.c \
 		./src/instances.c \
 		./src/main.c \
 		./src/map.c \
 		./src/math.c \
-		./src/output.c \
-		./src/reader.c \
-		./src/utils.c
+		./src/reader.c
 
-OBJ	=	$(SRC:.c=.o)
+OBJ		=	$(SRC:.c=.o)
 
-CFLAGS	+=	-Wall -Werror -Wextra -pedantic -std=c99 \
-		-I include -ggdb3 -Ofast
+CC		=	cc -o
 
-LDFLAGS	+=	-lm
+## @Variables
 
-NAME	=	solver
+NAME		=	solver
+
+INCLUDE		=	-I include -I ../common/include
+
+## @Flags
+
+CFLAGS		+=	-Wall -Werror -Wextra
+
+CPPFLAGS	+=	$(INCLUDE) -Ofast
+
+LDFLAGS		+=	-lm
+
+## @Make
+
+REMOVE		=	rm -f
+
+BUILD		=	make -C
+
+M_CLEAN		=	clean
+
+M_FCLEAN	=	fclean
+
+ALL		=	all
+
+## @Job
 
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
-		gcc -o $(NAME) $(CFLAGS) $(OBJ) $(LDFLAGS)
+		$(CC) $(NAME) $(CFLAGS) $(CPPFLAGS) $(OBJ) $(LDFLAGS)
 		cp $(NAME) ../tournament/$(NAME)
 
 clean:
-		rm -f $(OBJ)
+		$(REMOVE) $(OBJ)
 
-fclean:		clean
-		rm -f $(NAME)
-		rm -f ../tournament/$(NAME)
+fclean:		$(M_CLEAN)
+		$(REMOVE) $(NAME)
+		$(REMOVE) ../tournament/$(NAME)
 
-re:		fclean all
+re:		$(M_FCLEAN) $(ALL)
 
-.PHONY:		all clean fclean re
+.PHONY:		$(ALL) $(M_CLEAN) $(M_FCLEAN) re

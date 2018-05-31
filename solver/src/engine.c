@@ -2,12 +2,18 @@
 ** EPITECH PROJECT, 2018
 ** engine.c
 ** File description:
-**
+**  
 */
 
-#include "solver.h"
+#include <stdlib.h>
+#include <stdbool.h>
+#include <unistd.h>
+
+#include "engine.h"
+#include "output.h"
 
 static const char cells_value[3] = { '*', 'X', 'o' };
+static const char *no_solution = "no solution found\n";
 
 void process(struct request *req)
 {
@@ -18,15 +24,15 @@ void process(struct request *req)
 	if (start == NULL || end == NULL)
 		return;
 	if (end->state != EMPTY || start->state != EMPTY) {
-		my_put_str(NO_SOLUTION);
+		my_put_str(no_solution);
 		return;
 	}
-	for (int i = 0; i < req->map_width * req->map_height * 3; i++) {
+	for (int i = 0; i < req->map_width * req->map_height * 4; i++) {
 		clear_map(req);
 		call = find_path(req, start, end);
 		if (call == 0 && i + 1 >=
-			req->map_width * req->map_height * 3) {
-			my_put_str(NO_SOLUTION);
+			req->map_width * req->map_height * 4) {
+			my_put_str(no_solution);
 			return;
 		} else if (call == true)
 			break;
@@ -71,7 +77,7 @@ struct cell *find_nearest(struct request *req, struct cell *current,
 		bucket[1] = NULL;
 	bucket[2] = get_cell_by_id(req, current->id + req->map_width + 1);
 	bucket[3] = get_cell_by_id(req, current->id - (req->map_width + 1));
-	nearest = clean_bucket(req, bucket, end);
+	nearest = clean_bucket(req, bucket, end, current);
 	free(bucket);
 	return (nearest);
 }

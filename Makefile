@@ -12,6 +12,7 @@ SOLVER		= 	solver/
 OUTPUT		=	tournament/
 
 all:
+		mkdir -p $(OUTPUT)
 		make -C $(GENERATOR)
 		make -C $(SOLVER)
 

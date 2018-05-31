@@ -2,12 +2,22 @@
 ** EPITECH PROJECT, 2017
 ** main.c
 ** File description:
-**
+**  
 */
 
+#include <stdbool.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <time.h>
+#include <fcntl.h>
+
 #include "solver.h"
+#include "string.h"
+#include "engine.h"
 
 static const char cells_value[3] = { '*', 'X', 'o' };
+static const int exit_normal = 0;
+static const int exit_fail = 84;
 
 int main(int ac, char **as)
 {
@@ -21,12 +31,12 @@ int main(int ac, char **as)
 		check_file(content) == false ||
 		(req = get_instance(file_name)) == NULL ||
 		!req->cells[0] || !req->cells[req->real_len - 1])
-		return (EXIT_FAIL);
+		return (exit_fail);
 	process(req);
 	free_instance(req);
 	if (content != NULL)
 		free(content);
-	return (EXIT_NORMAL);
+	return (exit_normal);
 }
 
 int check_file(char *content)
